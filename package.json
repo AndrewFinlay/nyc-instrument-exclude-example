@@ -1,0 +1,17 @@
+{
+  "name": "nyc-instrument-exclude-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf ./instrumented",
+    "instrument": "nyc instrument src instrumented",
+    "instrument-exclude": "nyc instrument --exclude **/3rd-party/** --exclude **/dist/** src instrumented"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nyc": "^13.0.1",
+    "rimraf": "^2.6.3"
+  }
+}
