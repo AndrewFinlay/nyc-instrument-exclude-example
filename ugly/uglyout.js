@@ -1,0 +1,1 @@
+"use strict";const includes=require("./includes.js");class testClass{main(){let s=includes.stringAppend("100","000");console.log(s)}}module.exports=testClass;class includes{stringAppend(s,e){return s.concat(e)}}module.exports=new includes;

@@ -1,0 +1,10 @@
+{
+    "extension": [
+        ".af",
+        ".kp"
+    ],
+    "exclude": [
+        "**/3rd-party/**",
+        "**/node_modules/**"
+    ]
+}

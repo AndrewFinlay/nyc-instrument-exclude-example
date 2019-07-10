@@ -5,13 +5,45 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf ./instrumented",
-    "instrument": "nyc instrument src instrumented",
-    "instrument-exclude": "nyc instrument --exclude **/3rd-party/** --exclude **/dist/** src instrumented"
+    "clean_instrument": "rm -rf instrumented; nyc instrument --exclude '**/3rd-party/**' src instrumented",
+    "instrument": "npm run clean && nyc instrument --exclude '**/3rd-party/**' ./src ./instrumented",
+    "instrument-expand": "npm run clean && nyc instrument --exclude **/3rd-party/** src instrumented",
+    "instrument-exclude": "npm run clean && nyc instrument --exclude '**/3rd-party/**' --exclude '**/dist/**' src instrumented",
+    "instrument-yy": "npm run clean && nyc instrument --include **/3rd-party/** --exclude **/dist/** src instrumented",
+    "instrument-y": "npm run clean && nyc instrument --include '**/3rd-party/**' --exclude '**/index2.js' src instrumented",
+    "instrument-a": "npm run clean && nyc instrument --delete --exclude '**/index2.js' src 'src/instrumented'",
+    "instrument-b": "npm run clean && nyc instrument --exclude '**/index2.js' src 'src/instrumented'",
+    "instrument-c": "pwd; nyc instrument --delete --include src . 'src/instrumented'",
+    "instrument-d": "pwd; nyc instrument --delete --include src '/Users/andrewf/work/github_clones/nyc_example' './src/instrumented'",
+    "instrument-e": "pwd; nyc instrument --delete --complete-copy --include src '/Users/andrewf/work/github_clones/nyc_example' './src/instrumented'",
+    "instrument-z": "npm run clean && nyc instrument --exclude '**/index2.js' src instrumented",
+    "instrument-x": "nyc instrument --cwd ../nyc_example --include **/3rd-party/** --exclude **/dist/** src instrumented",
+    "instrument-in-place": "nyc instrument --inplace ../nyc_example ",
+    "node-instrument": "node ./node_modules/nyc/bin/nyc instrument --exclude **/3rd-party/** ../nyc_example/src ../nyc_example/instrumented",
+    "node-instrument2": "( cd ..; node ./nyc/bin/nyc instrument --exclude **/3rd-party/** ./nyc_example/src ./nyc_example/instrumented)",
+    "uglify": "terser ./lib/index.js -o ./ugly/uglyout.js",
+    "uglify-map": "terser ./lib/index.js ./lib/includes.js -c -m --ecma 6 --source-map -o ./ugly/uglyout.js",
+    "test": "pwd; tap -t360 --no-cov -b ./test/*.js",
+    "nyc": "pwd; rimraf './.temp-dir'; nyc --include 'src' --temp-dir './.temp-dir' tap -t360 --no-cov -b ./test/*.js",
+    "nycall": "pwd; rimraf './.temp-dir'; nyc --all --include 'src' --include 'lib' --temp-dir './.temp-dir' tap -t360 --no-cov -b ./test/*.js",
+    "nycsrcall": "pwd; rimraf './.temp-dir'; nyc --all --include 'src' --temp-dir './.temp-dir' tap -t360 --no-cov -b ./test/*.js",
+    "nyccwdsrc": "pwd; rimraf './.temp-dir'; nyc --cwd 'src' --temp-dir './.temp-dir' tap -t360 --no-cov -b ./test/*.js",
+    "nyccwdsrcall": "pwd; rimraf './.temp-dir'; nyc --cwd 'src' --all --temp-dir './.temp-dir' tap -t360 --no-cov -b ./test/*.js"
+  },
+  "nyc": {
+    "exclude": [
+      "**/dist/**",
+      "**/node_modules/**"
+    ]
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
     "nyc": "^13.0.1",
-    "rimraf": "^2.6.3"
+    "rimraf": "^2.6.3",
+    "source-map": "^0.7.3",
+    "tap": "^12.5.3"
   }
 }
